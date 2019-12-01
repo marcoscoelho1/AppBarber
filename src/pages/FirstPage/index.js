@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { registerFirebase } from '../../store/modules/auth/actions';
+// import auth from '@react-native-firebase/auth';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,17 +14,10 @@ export default class App extends Component {
     };
   }
 
-  register = async () => {
+  register = () => {
     const { email, password } = this.state;
-
-    try {
-      console.log('email', email);
-      console.log('senha', password);
-      const resp = await auth().createUserWithEmailAndPassword(email, password);
-      console.log('resp', resp);
-    } catch (e) {
-      console.error(e.message);
-    }
+    const { registerFirebase } = this.props;
+    registerFirebase(email, password);
   };
 
   render() {
@@ -51,3 +47,8 @@ export default class App extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ registerFirebase }, dispatch);
+
+export default connect(null, mapDispatchToProps)(App);
