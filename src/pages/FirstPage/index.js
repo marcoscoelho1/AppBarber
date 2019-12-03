@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { registerFirebase } from '../../store/modules/auth/actions';
+import { View, Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import Input from '~/components/Input';
+import Button from '~/components/Button';
+
+import { registerFirebase } from '~/store/modules/auth/actions';
 // import auth from '@react-native-firebase/auth';
 
 class App extends Component {
@@ -26,16 +30,25 @@ class App extends Component {
     return (
       <View>
         <Text>App Barber</Text>
-        <TextInput
-          placeholder="Email"
+        <Input
+          icon="email"
+          placeholder="E-mail"
           value={email}
           onChangeText={value => this.setState({ email: value })}
         />
-        <TextInput
+        <Input
+          icon="lock"
           placeholder="Senha"
           value={password}
           onChangeText={value => this.setState({ password: value })}
         />
+        <Button
+          onPress={() => {
+            this.register();
+          }}
+        >
+          Criar Usuário
+        </Button>
         <TouchableOpacity
           onPress={() => {
             this.register();
@@ -47,6 +60,14 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  registerFirebase: PropTypes.func,
+};
+
+App.defaultProps = {
+  registerFirebase: null,
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ registerFirebase }, dispatch);

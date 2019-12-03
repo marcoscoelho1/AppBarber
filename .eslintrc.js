@@ -34,6 +34,15 @@ module.exports = {
     ],
     'import/prefer-default-export' : 'off',
     'no-param-reassign' : 'off',
-    'no-shadow' : 'off'
+    'no-shadow' : 'off',
+    'react/no-typos' : 'off',
+    'react/jsx-props-no-spreading' : 'off'
   },
+  settings: {
+    'import/resolver': {
+      'babel-plugin-root-import' : {
+        rootPathSuffix: 'src'
+      }
+    }
+  }
 };
