@@ -19,9 +19,15 @@ export const ImageHeader = styled.Image`
   height: 84px;
 `;
 
+export const Title = styled.Text`
+  color: #fff;
+  font-size: 21px;
+  margin-bottom: 16px;
+`;
+
 export const Form = styled.View`
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   align-self: stretch;
   background: transparent;
@@ -34,13 +40,4 @@ export const InputForm = styled(Input)`
 export const SubmitButton = styled(Button)`
   margin-top: 15px;
   align-self: stretch;
-`;
-
-export const SignIn = styled.TouchableOpacity`
-  margin-top: 32px;
-`;
-
-export const SignInText = styled.Text`
-  color: #fff;
-  font-size: 16px;
 `;

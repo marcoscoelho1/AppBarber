@@ -36,7 +36,8 @@ module.exports = {
     'no-param-reassign' : 'off',
     'no-shadow' : 'off',
     'react/no-typos' : 'off',
-    'react/jsx-props-no-spreading' : 'off'
+    'react/jsx-props-no-spreading' : 'off',
+    'react/forbid-prop-types' : 'off'
   },
   settings: {
     'import/resolver': {

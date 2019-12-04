@@ -26,3 +26,9 @@ export function registerFirebaseSuccess(email, uid) {
     payload: { email, uid },
   };
 }
+
+export function registerFirebaseFailure() {
+  return {
+    type: '@auth/REGISTER_FIREBASE_FAILURE',
+  };
+}

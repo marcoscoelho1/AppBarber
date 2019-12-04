@@ -31,6 +31,15 @@ export default function auth(state = INITIAL_STATE, action) {
       return state;
     }
 
+    case '@auth/REGISTER_FIREBASE_FAILURE': {
+      state = {
+        ...state,
+        loading: false,
+      };
+
+      return state;
+    }
+
     default:
       return state;
   }

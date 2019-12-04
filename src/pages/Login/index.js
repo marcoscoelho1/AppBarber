@@ -1,7 +1,8 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+import Background from '~/components/BarberBackground';
 import BeardIcon from '~/assets/images/beard_icon_white.png';
-import Background from '~/assets/images/Background.png';
 
 import {
   Container,
@@ -12,12 +13,11 @@ import {
   Form,
   SignIn,
   SignInText,
-  ImgBackground,
 } from './styles';
 
-export default function Login() {
+export default function Login({ navigation }) {
   return (
-    <ImgBackground source={Background}>
+    <Background>
       <Container>
         <LogoHeader>
           <ImageHeader source={BeardIcon} />
@@ -36,12 +36,20 @@ export default function Login() {
             secureTextEntry
             autoCapitalize="none"
           />
-          <SubmitButton onPress={() => {}}>Entrar</SubmitButton>
-          <SignIn>
+          <SubmitButton onPress={() => navigation.navigate('SignUp')}>
+            Entrar
+          </SubmitButton>
+          <SignIn onPress={() => navigation.navigate('EmailAndPassword')}>
             <SignInText>Cadastre-se</SignInText>
           </SignIn>
         </Form>
       </Container>
-    </ImgBackground>
+    </Background>
   );
 }
+
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
