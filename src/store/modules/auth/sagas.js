@@ -1,6 +1,7 @@
 import { takeLatest, put, all } from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import { registerFirebaseSuccess, registerFirebaseFailure } from './actions';
+import { updateUser } from '../user/actions';
 
 /*
 import { takeLatest, call, put, all } from 'redux-saga/effects';
@@ -29,6 +30,7 @@ export function* registerFirebase({ payload }) {
     const { user } = response;
 
     yield put(registerFirebaseSuccess(user.email, user.uid));
+    yield put(updateUser({ email: user.email, uid: user.uid }));
   } catch (error) {
     console.tron.log(error);
     yield put(registerFirebaseFailure());
