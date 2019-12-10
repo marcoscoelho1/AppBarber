@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-export const Container = styled.KeyboardAvoidingView`
+export const Container = styled.ScrollView`
   flex: 1;
   padding: 0 16px;
 `;

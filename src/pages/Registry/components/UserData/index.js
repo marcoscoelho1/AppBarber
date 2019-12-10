@@ -29,8 +29,14 @@ class UserData extends Component {
   }
 
   register = () => {
-    const { updateUser } = this.props;
+    const { updateUser, user, navigation } = this.props;
     updateUser({ ...this.state });
+
+    if (user.data.type === 'barber') {
+      navigation.navigate('BarbershopData');
+    } else {
+      navigation.navigate('MainPage');
+    }
 
     /*
     const { name, cpf, birthDate, cellphone } = this.state;
@@ -95,6 +101,7 @@ class UserData extends Component {
 }
 
 UserData.propTypes = {
+  user: PropTypes.any.isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
@@ -108,4 +115,8 @@ UserData.defaultProps = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ updateUser }, dispatch);
 
-export default connect(null, mapDispatchToProps)(UserData);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserData);

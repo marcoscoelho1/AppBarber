@@ -29,6 +29,7 @@ function UserType({ updateUser, navigation }) {
           <ClientButton
             onPress={() => {
               updateUser({ type: 'client' });
+              navigation.navigate('UserData');
             }}
           >
             Cliente
