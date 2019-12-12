@@ -19,6 +19,15 @@ export default function user(state = INITIAL_STATE, action) {
       return state;
     }
 
+    case '@user/CREATEUSER_FIREBASE_REQUEST': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
     default:
       return state;
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Background from '~/components/BarberBackground';
 import BeardIcon from '~/assets/images/beard_icon_white.png';
-import { updateUser } from '~/store/modules/user/actions';
+import { createUserFirebase } from '~/store/modules/user/actions';
 
 import {
   Container,
@@ -28,17 +28,28 @@ class UserData extends Component {
     };
   }
 
-  register = () => {
-    const { updateUser, user, navigation } = this.props;
-    updateUser({ ...this.state });
+  componentDidUpdate(prevProps) {
+    const { user, navigation } = this.props;
+    if (prevProps.user.data !== user.data) {
+      if (user.data.type === 'barber') {
+        navigation.navigate('BarbershopData');
+      } else {
+        navigation.navigate('MainPage');
+      }
+    }
+  }
 
+  register = () => {
+    const { createUserFirebase } = this.props;
+    createUserFirebase({ ...this.state });
+    /*
     if (user.data.type === 'barber') {
       navigation.navigate('BarbershopData');
     } else {
       navigation.navigate('MainPage');
     }
 
-    /*
+
     const { name, cpf, birthDate, cellphone } = this.state;
     const { registerFirebase } = this.props;
     registerFirebase(email, password); */
@@ -46,6 +57,7 @@ class UserData extends Component {
 
   render() {
     const { name, cpf, birthDate, cellphone } = this.state;
+    const { user } = this.props;
 
     return (
       <Background>
@@ -87,6 +99,7 @@ class UserData extends Component {
               autoCapitalize="none"
             />
             <SubmitButton
+              loading={user.loading}
               onPress={() => {
                 this.register();
               }}
@@ -105,15 +118,15 @@ UserData.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  updateUser: PropTypes.func,
+  createUserFirebase: PropTypes.func,
 };
 
 UserData.defaultProps = {
-  updateUser: null,
+  createUserFirebase: null,
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateUser }, dispatch);
+  bindActionCreators({ createUserFirebase }, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,

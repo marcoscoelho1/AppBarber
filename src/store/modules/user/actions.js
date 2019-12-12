@@ -19,3 +19,10 @@ export function updateUser(data) {
     payload: { data },
   };
 }
+
+export function createUserFirebase(data) {
+  return {
+    type: '@user/CREATEUSER_FIREBASE_REQUEST',
+    payload: { data },
+  };
+}

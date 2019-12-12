@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 
 export default function barbershop(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case '@user/UPDATE_BARBERSHOP': {
+    case '@barbershop/UPDATE_BARBERSHOP': {
       const { data } = action.payload;
       state = {
         ...state,
@@ -14,6 +14,15 @@ export default function barbershop(state = INITIAL_STATE, action) {
           ...data,
         },
         loading: false,
+      };
+
+      return state;
+    }
+
+    case '@barbershop/CREATEBARBERSHOP_FIREBASE_REQUEST': {
+      state = {
+        ...state,
+        loading: true,
       };
 
       return state;

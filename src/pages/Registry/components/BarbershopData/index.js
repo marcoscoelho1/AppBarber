@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Background from '~/components/BarberBackground';
 import BeardIcon from '~/assets/images/beard_icon_white.png';
-import { updateBarbershop } from '~/store/modules/barbershop/actions';
+import { createBarbershopFirebase } from '~/store/modules/barbershop/actions';
 
 import {
   Container,
@@ -37,12 +37,13 @@ class BarbershopData extends Component {
   }
 
   register = () => {
-    const { updateBarbershop } = this.props;
-    updateBarbershop({ ...this.state });
+    const { createBarbershopFirebase } = this.props;
+    createBarbershopFirebase({ ...this.state });
   };
 
   render() {
     const { name, description, cnpj, address } = this.state;
+    const { barbershop } = this.props;
 
     return (
       <Background>
@@ -141,6 +142,7 @@ class BarbershopData extends Component {
             />
 
             <SubmitButton
+              loading={barbershop.loading}
               onPress={() => {
                 this.register();
               }}
@@ -155,17 +157,23 @@ class BarbershopData extends Component {
 }
 
 BarbershopData.propTypes = {
+  barbershop: PropTypes.any,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  updateBarbershop: PropTypes.func,
+  createBarbershopFirebase: PropTypes.func,
 };
 
 BarbershopData.defaultProps = {
-  updateBarbershop: null,
+  createBarbershopFirebase: null,
+  barbershop: null,
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateBarbershop }, dispatch);
+  bindActionCreators({ createBarbershopFirebase }, dispatch);
 
-export default connect(null, mapDispatchToProps)(BarbershopData);
+const mapStateToProps = state => ({
+  barbershop: state.barbershop,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarbershopData);

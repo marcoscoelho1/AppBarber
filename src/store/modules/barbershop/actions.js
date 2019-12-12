@@ -15,7 +15,14 @@ export function signFailure() {
 
 export function updateBarbershop(data) {
   return {
-    type: '@user/UPDATE_BARBERSHOP',
+    type: '@barbershop/UPDATE_BARBERSHOP',
+    payload: { data },
+  };
+}
+
+export function createBarbershopFirebase(data) {
+  return {
+    type: '@barbershop/CREATEBARBERSHOP_FIREBASE_REQUEST',
     payload: { data },
   };
 }
