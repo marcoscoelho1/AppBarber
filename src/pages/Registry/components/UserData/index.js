@@ -69,34 +69,35 @@ class UserData extends Component {
             <Title>Informe seus dados pessoais!</Title>
             <InputForm
               placeholder="Nome Completo"
-              icon="person-outline"
               value={name}
               onChangeText={value => this.setState({ name: value })}
               autoCorrect={false}
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="CPF"
               keyboardType="numeric"
               value={cpf}
-              onChangeText={value => this.setState({ cpf: value })}
+              onChangeText={value => {
+                this.setState({ cpf: value });
+              }}
               autoCapitalize="none"
+              mask="[000].[000].[000]-[00]"
             />
             <InputForm
-              icon="date-range"
               placeholder="Data de Nascimento"
               keyboardType="numeric"
               value={birthDate}
               onChangeText={value => this.setState({ birthDate: value })}
               autoCapitalize="none"
+              mask="[00]/[00]/[0000]"
             />
             <InputForm
-              icon="call"
               placeholder="Celular"
               keyboardType="numeric"
               value={cellphone}
               onChangeText={value => this.setState({ cellphone: value })}
               autoCapitalize="none"
+              mask="([00])[00000]-[0000]"
             />
             <SubmitButton
               loading={user.loading}

@@ -38,6 +38,6 @@ export const InputForm = styled(Input)`
 `;
 
 export const SubmitButton = styled(Button)`
-  margin-top: 15px;
+  margin: 15px 0px 30px 0px;
   align-self: stretch;
 `;

@@ -55,38 +55,39 @@ class BarbershopData extends Component {
             <Title>Agora, preencha os dados e o endereço da barbearia!</Title>
             <InputForm
               placeholder="Nome da Barbearia"
-              icon="person-outline"
               value={name}
               onChangeText={value => this.setState({ name: value })}
               autoCorrect={false}
             />
             <InputForm
               placeholder="Descrição"
-              icon="person-outline"
               value={description}
               onChangeText={value => this.setState({ description: value })}
               autoCorrect={false}
+              multiline
+              numberOfLines={5}
+              textAlignVertical="top"
+              style={{ height: 102, alignItems: 'flex-start' }}
             />
             <InputForm
               placeholder="CNPJ"
-              icon="person-outline"
               value={cnpj}
+              mask="[00].[000].[000]/[000]-[00]"
               onChangeText={value => this.setState({ cnpj: value })}
               autoCorrect={false}
             />
             <Title>Endereço</Title>
             <InputForm
-              icon="assignment-ind"
               placeholder="CEP"
               keyboardType="numeric"
               value={address.zipCode}
+              mask="[00000]-[000]"
               onChangeText={value =>
                 this.setState({ address: { ...address, zipCode: value } })
               }
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="Rua"
               value={address.street}
               onChangeText={value =>
@@ -95,8 +96,7 @@ class BarbershopData extends Component {
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
-              placeholder="Numero"
+              placeholder="Número"
               keyboardType="numeric"
               value={address.number}
               onChangeText={value =>
@@ -105,7 +105,6 @@ class BarbershopData extends Component {
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="Complemento"
               value={address.complement}
               onChangeText={value =>
@@ -114,7 +113,6 @@ class BarbershopData extends Component {
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="Bairro"
               value={address.neighborhood}
               onChangeText={value =>
@@ -123,7 +121,6 @@ class BarbershopData extends Component {
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="Cidade"
               value={address.city}
               onChangeText={value =>
@@ -132,12 +129,12 @@ class BarbershopData extends Component {
               autoCapitalize="none"
             />
             <InputForm
-              icon="assignment-ind"
               placeholder="UF"
               value={address.regionCode}
               onChangeText={value =>
                 this.setState({ address: { ...address, regionCode: value } })
               }
+              maxLength={2}
               autoCapitalize="none"
             />
 

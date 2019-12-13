@@ -11,9 +11,9 @@ export default createAppContainer(
   createSwitchNavigator({
     Login,
     MainPage,
-    EmailAndPassword,
-    UserType,
     UserData,
     BarbershopData,
+    EmailAndPassword,
+    UserType,
   })
 );
