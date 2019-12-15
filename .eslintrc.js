@@ -37,7 +37,8 @@ module.exports = {
     'no-shadow' : 'off',
     'react/no-typos' : 'off',
     'react/jsx-props-no-spreading' : 'off',
-    'react/forbid-prop-types' : 'off'
+    'react/forbid-prop-types' : 'off',
+    'react/no-array-index-key' : 'off'
   },
   settings: {
     'import/resolver': {
