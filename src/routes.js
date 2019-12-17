@@ -10,12 +10,12 @@ import BarbershopServices from './pages/Registry/components/BarbershopServices';
 
 export default createAppContainer(
   createSwitchNavigator({
-    BarbershopServices,
     Login,
     MainPage,
-    UserData,
-    BarbershopData,
     EmailAndPassword,
+    UserData,
     UserType,
+    BarbershopData,
+    BarbershopServices,
   })
 );

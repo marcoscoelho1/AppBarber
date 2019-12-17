@@ -34,6 +34,7 @@ export const Form = styled.View`
 `;
 
 export const FormRow = styled.View`
+  flex-direction: ${props => (props.DisplayRow ? `row` : 'column')};
   flex: 1;
   justify-content: flex-start;
   align-items: center;
@@ -48,4 +49,15 @@ export const InputForm = styled(Input)`
 export const SubmitButton = styled(Button)`
   margin: 15px 0px 30px 0px;
   align-self: stretch;
+`;
+
+export const AddButton = styled(Button)`
+  margin: 15px 0px 30px 0px;
+  width: 50%;
+`;
+
+export const RemoveButton = styled(Button)`
+  width: 50%;
+  background-color: #ee3342;
+  font-size: 16px;
 `;

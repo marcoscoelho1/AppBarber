@@ -32,3 +32,29 @@ export function registerFirebaseFailure() {
     type: '@auth/REGISTER_FIREBASE_FAILURE',
   };
 }
+
+export function loginFirebase(email, password) {
+  return {
+    type: '@auth/LOGIN_FIREBASE_REQUEST',
+    payload: { email, password },
+  };
+}
+
+export function loginFirebaseSuccess(email, uid) {
+  return {
+    type: '@auth/LOGIN_FIREBASE_SUCCESS',
+    payload: { email, uid },
+  };
+}
+
+export function loginFirebaseFailure() {
+  return {
+    type: '@auth/LOGIN_FIREBASE_FAILURE',
+  };
+}
+
+export function logOut() {
+  return {
+    type: '@auth/LOG_OUT',
+  };
+}

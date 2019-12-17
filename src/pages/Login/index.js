@@ -1,6 +1,8 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { loginFirebase } from '~/store/modules/auth/actions';
 import Background from '~/components/BarberBackground';
 import BeardIcon from '~/assets/images/beard_icon_white.png';
 
@@ -15,41 +17,87 @@ import {
   SignInText,
 } from './styles';
 
-export default function Login({ navigation }) {
-  return (
-    <Background>
-      <Container>
-        <LogoHeader>
-          <ImageHeader source={BeardIcon} />
-        </LogoHeader>
-        <Form>
-          <InputForm
-            placeholder="E-mail"
-            icon="mail-outline"
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
-          <InputForm
-            icon="lock-outline"
-            placeholder="Senha"
-            secureTextEntry
-            autoCapitalize="none"
-          />
-          <SubmitButton onPress={() => navigation.navigate('SignUp')}>
-            Entrar
-          </SubmitButton>
-          <SignIn onPress={() => navigation.navigate('EmailAndPassword')}>
-            <SignInText>Cadastre-se</SignInText>
-          </SignIn>
-        </Form>
-      </Container>
-    </Background>
-  );
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
+  }
+
+  componentDidMount() {
+    const { auth, navigation } = this.props;
+    if (auth.data.uid !== '') {
+      navigation.navigate('MainPage');
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { auth, navigation } = this.props;
+
+    if (prevProps.auth.data.uid !== auth.data.uid && auth.data.uid !== '') {
+      navigation.navigate('MainPage');
+    }
+  }
+
+  render() {
+    const { navigation, loginFirebase, auth } = this.props;
+    const { email, password } = this.state;
+
+    return (
+      <Background>
+        <Container>
+          <LogoHeader>
+            <ImageHeader source={BeardIcon} />
+          </LogoHeader>
+          <Form>
+            <InputForm
+              placeholder="E-mail"
+              icon="mail-outline"
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={email}
+              onChangeText={value => this.setState({ email: value })}
+            />
+            <InputForm
+              icon="lock-outline"
+              placeholder="Senha"
+              secureTextEntry
+              autoCapitalize="none"
+              value={password}
+              onChangeText={value => this.setState({ password: value })}
+            />
+            <SubmitButton
+              onPress={() => loginFirebase(email, password)}
+              loading={auth.loading}
+            >
+              Entrar
+            </SubmitButton>
+            <SignIn onPress={() => navigation.navigate('EmailAndPassword')}>
+              <SignInText>Cadastre-se</SignInText>
+            </SignIn>
+          </Form>
+        </Container>
+      </Background>
+    );
+  }
 }
 
 Login.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
+  auth: PropTypes.any.isRequired,
+  loginFirebase: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ loginFirebase }, dispatch);
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

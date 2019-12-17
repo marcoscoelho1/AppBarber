@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Background from '~/components/BarberBackground';
 import BeardIcon from '~/assets/images/beard_icon_white.png';
-import { createBarbershopFirebase } from '~/store/modules/barbershop/actions';
+import { updateBarbershop } from '~/store/modules/barbershop/actions';
 
 import {
   Container,
@@ -36,9 +36,17 @@ class BarbershopData extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { barbershop, navigation } = this.props;
+
+    if (prevProps.barbershop.data !== barbershop.data) {
+      navigation.navigate('BarbershopServices');
+    }
+  }
+
   register = () => {
-    const { createBarbershopFirebase } = this.props;
-    createBarbershopFirebase({ ...this.state });
+    const { updateBarbershop } = this.props;
+    updateBarbershop({ ...this.state });
   };
 
   render() {
@@ -158,16 +166,16 @@ BarbershopData.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  createBarbershopFirebase: PropTypes.func,
+  updateBarbershop: PropTypes.func,
 };
 
 BarbershopData.defaultProps = {
-  createBarbershopFirebase: null,
+  updateBarbershop: null,
   barbershop: null,
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ createBarbershopFirebase }, dispatch);
+  bindActionCreators({ updateBarbershop }, dispatch);
 
 const mapStateToProps = state => ({
   barbershop: state.barbershop,
