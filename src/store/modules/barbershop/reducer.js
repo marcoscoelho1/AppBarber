@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
-  data: {},
+  data: {
+    nearbyBarbershopsList: [],
+  },
   loading: false,
 };
 
@@ -23,6 +25,35 @@ export default function barbershop(state = INITIAL_STATE, action) {
       state = {
         ...state,
         loading: true,
+      };
+
+      return state;
+    }
+
+    case '@barbershop/GET_BARBERSHOPS_AROUND_REQUEST': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
+    case '@barbershop/GET_BARBERSHOPS_AROUND_SUCCESS': {
+      const { data } = action.payload;
+
+      console.tron.log('daaaaaaata', data);
+
+      state = {
+        ...state,
+        data: {
+          ...state.data,
+          nearbyBarbershopsList: [
+            ...state.data.nearbyBarbershopsList,
+            data.barberShop,
+          ],
+        },
+        loading: false,
       };
 
       return state;

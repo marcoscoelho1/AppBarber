@@ -26,3 +26,17 @@ export function createBarbershopFirebase(data) {
     payload: { data },
   };
 }
+
+export function getBarbershopsAround(lat, lng) {
+  return {
+    type: '@barbershop/GET_BARBERSHOPS_AROUND_REQUEST',
+    payload: { lat, lng },
+  };
+}
+
+export function getBarbershopsAroundSuccess(data) {
+  return {
+    type: '@barbershop/GET_BARBERSHOPS_AROUND_SUCCESS',
+    payload: { data },
+  };
+}

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import MapView from 'react-native-maps';
 import { Text } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import firestore from '@react-native-firebase/firestore';
 import { logOut } from '~/store/modules/auth/actions';
 import Button from '~/components/Button';
 
@@ -16,10 +18,17 @@ import {
   mapStyle,
 } from './styles';
 
+const barbershopFirebase = firestore().collection('barbershops');
+
 export class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      nearBarberShops: [],
+      initialCoords: {
+        latitude: 0,
+        longitude: 0,
+      },
       detailsVisible: false,
       barbershopSelected: {
         name: '',
@@ -28,6 +37,29 @@ export class MainPage extends Component {
       },
     };
   }
+
+  componentDidMount() {
+    Geolocation.getCurrentPosition(info => {
+      this.setState({ initialCoords: { ...info.coords } }, () => {
+        this.getBarbershopsAround(info.coords.longitude);
+      });
+    });
+  }
+
+  getBarbershopsAround = lng => {
+    barbershopFirebase
+      .where('coordinates.lng', '<=', lng + 0.5)
+      .where('coordinates.lng', '>=', lng - 0.5)
+      .limit(50)
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const { nearBarberShops } = this.state;
+          this.setState({
+            nearBarberShops: [...nearBarberShops, doc.data()],
+          });
+        });
+      });
+  };
 
   setBabershopSelected = babershop => {
     this.setState({
@@ -50,7 +82,12 @@ export class MainPage extends Component {
 
   render() {
     const { navigation, logOut } = this.props;
-    const { detailsVisible, barbershopSelected } = this.state;
+    const {
+      detailsVisible,
+      barbershopSelected,
+      initialCoords,
+      nearBarberShops,
+    } = this.state;
 
     return (
       <Container>
@@ -68,9 +105,15 @@ export class MainPage extends Component {
           <ViewMap
             customMapStyle={mapStyle}
             loadingEnabled
-            region={{
-              latitude: -23.1910636,
-              longitude: -47.3139639,
+            initialRegion={{
+              latitude:
+                initialCoords.latitude !== 0
+                  ? initialCoords.latitude
+                  : -23.1929053,
+              longitude:
+                initialCoords.longitude !== 0
+                  ? initialCoords.longitude
+                  : -47.3146839,
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
             }}
@@ -78,28 +121,22 @@ export class MainPage extends Component {
               this.handleCloseDetailsVisible();
             }}
           >
-            <ViewMap.Marker
-              coordinate={{ latitude: -23.1929053, longitude: -47.3124952 }}
-              // title="title"
-              // description="description"
-              onPress={() => {
-                this.setBabershopSelected({
-                  name: 'Barbearia 1',
-                  address: 'Rua Europa',
-                  description: 'Barbearia Top',
-                });
-              }}
-            />
-            <ViewMap.Marker
-              coordinate={{ latitude: -23.1910685, longitude: -47.3117752 }}
-              onPress={() => {
-                this.setBabershopSelected({
-                  name: 'Barbearia 2',
-                  address: 'Rua Europa',
-                  description: 'Barbearia Top',
-                });
-              }}
-            />
+            {nearBarberShops.map((barberShop, indexBarbershop) => (
+              <ViewMap.Marker
+                key={indexBarbershop}
+                coordinate={{
+                  latitude: barberShop.coordinates.lat,
+                  longitude: barberShop.coordinates.lng,
+                }}
+                onPress={() => {
+                  this.setBabershopSelected({
+                    name: barberShop.name,
+                    address: `Rua ${barberShop.address.street}`,
+                    description: barberShop.address.description,
+                  });
+                }}
+              />
+            ))}
           </ViewMap>
           {detailsVisible && (
             <BarberShopDetails>
