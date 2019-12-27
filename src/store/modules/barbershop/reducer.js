@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   data: {
-    nearbyBarbershopsList: [],
+    barbershopUserBarber: {},
+    barbershopSelected: {},
   },
   loading: false,
 };
@@ -13,7 +14,9 @@ export default function barbershop(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          ...data,
+          barbershopUserBarber: {
+            ...data,
+          },
         },
         loading: false,
       };
@@ -52,6 +55,23 @@ export default function barbershop(state = INITIAL_STATE, action) {
             ...state.data.nearbyBarbershopsList,
             data.barberShop,
           ],
+        },
+        loading: false,
+      };
+
+      return state;
+    }
+
+    case '@barbershop/SELECT_BARBERSHOP_REQUEST': {
+      const { data } = action.payload;
+
+      state = {
+        ...state,
+        data: {
+          ...state.data,
+          barbershopSelected: {
+            ...data,
+          },
         },
         loading: false,
       };

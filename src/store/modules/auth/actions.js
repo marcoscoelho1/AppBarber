@@ -40,10 +40,10 @@ export function loginFirebase(email, password) {
   };
 }
 
-export function loginFirebaseSuccess(email, uid) {
+export function loginFirebaseSuccess(email, uid, logged) {
   return {
     type: '@auth/LOGIN_FIREBASE_SUCCESS',
-    payload: { email, uid },
+    payload: { email, uid, logged },
   };
 }
 

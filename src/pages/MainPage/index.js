@@ -7,6 +7,7 @@ import { Text } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import { logOut } from '~/store/modules/auth/actions';
+import { updateUser } from '~/store/modules/user/actions';
 import Button from '~/components/Button';
 
 import {
@@ -17,8 +18,13 @@ import {
   BarberShopDetails,
   mapStyle,
 } from './styles';
+import {
+  updateBarbershop,
+  selectBarbershopScheduling,
+} from '~/store/modules/barbershop/actions';
 
 const barbershopFirebase = firestore().collection('barbershops');
+const userFirebase = firestore().collection('users');
 
 export class MainPage extends Component {
   constructor(props) {
@@ -35,6 +41,8 @@ export class MainPage extends Component {
         address: '',
         description: '',
       },
+      user: {},
+      barbershopData: {},
     };
   }
 
@@ -44,6 +52,8 @@ export class MainPage extends Component {
         this.getBarbershopsAround(info.coords.longitude);
       });
     });
+
+    this.getUser();
   }
 
   getBarbershopsAround = lng => {
@@ -61,10 +71,60 @@ export class MainPage extends Component {
       });
   };
 
-  setBabershopSelected = babershop => {
-    this.setState({
-      barbershopSelected: { ...babershop },
+  getUser = () => {
+    const { auth, updateUser } = this.props;
+
+    userFirebase.where('uid', '==', auth.data.uid).onSnapshot(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.tron.log('doooocUser', doc);
+
+        this.setState(
+          {
+            user: { ...doc.data() },
+          },
+          () => {
+            const { user } = this.state;
+            updateUser(user);
+            if (user.type === 'barber') {
+              this.getBarbershopData();
+            }
+          }
+        );
+      });
     });
+  };
+
+  getBarbershopData = () => {
+    const { auth, updateBarbershop } = this.props;
+
+    barbershopFirebase
+      .where('uid', '==', auth.data.uid)
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.tron.log('doooocBarbershop', doc);
+
+          this.setState(
+            {
+              barbershopData: { ...doc.data() },
+            },
+            () => {
+              const { barbershopData } = this.state;
+              updateBarbershop(barbershopData);
+            }
+          );
+        });
+      });
+  };
+
+  setBabershopSelected = barbershop => {
+    const { selectBarbershopScheduling } = this.props;
+
+    this.setState({
+      barbershopSelected: { ...barbershop },
+    });
+
+    selectBarbershopScheduling({ ...barbershop });
+
     this.handleShowDetailsVisible();
   };
 
@@ -129,11 +189,7 @@ export class MainPage extends Component {
                   longitude: barberShop.coordinates.lng,
                 }}
                 onPress={() => {
-                  this.setBabershopSelected({
-                    name: barberShop.name,
-                    address: `Rua ${barberShop.address.street}`,
-                    description: barberShop.address.description,
-                  });
+                  this.setBabershopSelected(barberShop);
                 }}
               />
             ))}
@@ -141,8 +197,15 @@ export class MainPage extends Component {
           {detailsVisible && (
             <BarberShopDetails>
               <Text>{barbershopSelected.name}</Text>
-              <Text>{barbershopSelected.address}</Text>
+              <Text>{`Rua: ${barbershopSelected.address.street}, ${barbershopSelected.address.number}`}</Text>
               <Text>{barbershopSelected.description}</Text>
+              <Button
+                onPress={() => {
+                  navigation.navigate('BarbershopResume');
+                }}
+              >
+                Ver Detalhes
+              </Button>
             </BarberShopDetails>
           )}
         </MapContainer>
@@ -156,12 +219,28 @@ MainPage.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
   logOut: PropTypes.func,
+  updateUser: PropTypes.func,
+  updateBarbershop: PropTypes.func,
+  selectBarbershopScheduling: PropTypes.func,
+  auth: PropTypes.any,
 };
 
 MainPage.defaultProps = {
   logOut: null,
+  auth: null,
+  updateUser: null,
+  selectBarbershopScheduling: null,
+  updateBarbershop: null,
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ logOut }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { logOut, updateUser, updateBarbershop, selectBarbershopScheduling },
+    dispatch
+  );
 
-export default connect(null, mapDispatchToProps)(MainPage);
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

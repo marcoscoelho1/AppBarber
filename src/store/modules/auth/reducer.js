@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   data: {
     uid: '',
     email: '',
+    logged: false,
   },
   loading: false,
 };
@@ -50,12 +51,13 @@ export default function auth(state = INITIAL_STATE, action) {
     }
 
     case '@auth/LOGIN_FIREBASE_SUCCESS': {
-      const { email, uid } = action.payload;
+      const { email, uid, logged } = action.payload;
       state = {
         ...state,
         data: {
           email,
           uid,
+          logged,
         },
         loading: false,
       };

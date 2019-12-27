@@ -33,8 +33,6 @@ class UserData extends Component {
     if (prevProps.user.data !== user.data) {
       if (user.data.type === 'barber') {
         navigation.navigate('BarbershopData');
-      } else {
-        navigation.navigate('MainPage');
       }
     }
   }
@@ -42,17 +40,6 @@ class UserData extends Component {
   register = () => {
     const { createUserFirebase } = this.props;
     createUserFirebase({ ...this.state });
-    /*
-    if (user.data.type === 'barber') {
-      navigation.navigate('BarbershopData');
-    } else {
-      navigation.navigate('MainPage');
-    }
-
-
-    const { name, cpf, birthDate, cellphone } = this.state;
-    const { registerFirebase } = this.props;
-    registerFirebase(email, password); */
   };
 
   render() {

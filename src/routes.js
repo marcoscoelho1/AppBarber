@@ -1,4 +1,5 @@
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
@@ -7,15 +8,27 @@ import UserType from './pages/Registry/components/UserType';
 import UserData from './pages/Registry/components/UserData';
 import BarbershopData from './pages/Registry/components/BarbershopData';
 import BarbershopServices from './pages/Registry/components/BarbershopServices';
+import BarbershopResume from './pages/Scheduling/BarbershopResume';
 
-export default createAppContainer(
-  createSwitchNavigator({
-    Login,
-    MainPage,
-    EmailAndPassword,
-    UserData,
-    UserType,
-    BarbershopData,
-    BarbershopServices,
-  })
-);
+export default loggedIn =>
+  createAppContainer(
+    createSwitchNavigator(
+      {
+        Login: createSwitchNavigator({
+          Login,
+          EmailAndPassword,
+          UserData,
+          UserType,
+          BarbershopData,
+          BarbershopServices,
+        }),
+        App: createStackNavigator({
+          MainPage,
+          BarbershopResume,
+        }),
+      },
+      {
+        initialRouteName: loggedIn ? 'App' : 'Login',
+      }
+    )
+  );

@@ -7,23 +7,6 @@ import {
 } from './actions';
 import { updateUser } from '../user/actions';
 
-/*
-import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { signInSuccess } from './actions';
-
-export function* signIn({ payload }) {
-  const { email, password } = payload;
-  const response = yield call(api.post, 'sessions', {
-    email,
-    password,
-  });
-
-  const { token, user } = response.data;
-  yield put(signInSuccess(token, user));
-}
-
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]); */
-
 export function* registerFirebase({ payload }) {
   const { email, password } = payload;
   try {
@@ -33,7 +16,7 @@ export function* registerFirebase({ payload }) {
     );
     const { user } = response;
 
-    yield put(registerFirebaseSuccess(user.email, user.uid));
+    // yield put(registerFirebaseSuccess(user.email, user.uid, false));
     yield put(updateUser({ email: user.email, uid: user.uid }));
   } catch (error) {
     console.tron.log(error);
@@ -44,18 +27,12 @@ export function* registerFirebase({ payload }) {
 export function* loginFirebase({ payload }) {
   const { email, password } = payload;
 
-  console.tron.log('email', email);
-  console.tron.log('password', password);
-
   try {
     const response = yield auth().signInWithEmailAndPassword(email, password);
     const { user } = response;
-
-    yield put(loginFirebaseSuccess(user.email, user.uid));
-    // yield put(updateUser({ email: user.email, uid: user.uid }));
+    yield put(loginFirebaseSuccess(user.email, user.uid, true));
   } catch (error) {
     console.tron.log(error);
-    // yield put(registerFirebaseFailure());
   }
 }
 

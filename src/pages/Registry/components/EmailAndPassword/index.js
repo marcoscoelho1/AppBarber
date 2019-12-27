@@ -27,9 +27,9 @@ class EmailAndPassword extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { auth, navigation } = this.props;
+    const { user, navigation } = this.props;
 
-    if (prevProps.auth.data.uid !== auth.data.uid) {
+    if (prevProps.user.data.uid !== user.data.uid) {
       navigation.navigate('UserType');
     }
   }
@@ -90,11 +90,13 @@ EmailAndPassword.propTypes = {
   }).isRequired,
   registerFirebase: PropTypes.func,
   auth: PropTypes.any,
+  user: PropTypes.any,
 };
 
 EmailAndPassword.defaultProps = {
   registerFirebase: null,
   auth: null,
+  user: null,
 };
 
 const mapDispatchToProps = dispatch =>
@@ -102,6 +104,7 @@ const mapDispatchToProps = dispatch =>
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmailAndPassword);
