@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import MapView from 'react-native-maps';
-import { Text } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import { Avatar } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { logOut } from '~/store/modules/auth/actions';
 import { updateUser } from '~/store/modules/user/actions';
-import Button from '~/components/Button';
 
 import {
   Container,
   MapContainer,
   ViewMap,
-  Header,
   BarberShopDetails,
+  BarberShopDetailsLogo,
+  BarberShopDetailsInfo,
+  DetailsButton,
+  BarbershopTitle,
+  BarbershopAddress,
   mapStyle,
 } from './styles';
 import {
@@ -152,16 +155,6 @@ export class MainPage extends Component {
 
     return (
       <Container>
-        <Header>
-          <Button
-            onPress={() => {
-              logOut();
-              navigation.navigate('Login');
-            }}
-          >
-            Sair
-          </Button>
-        </Header>
         <MapContainer>
           <ViewMap
             customMapStyle={mapStyle}
@@ -197,23 +190,26 @@ export class MainPage extends Component {
           </ViewMap>
           {detailsVisible && (
             <BarberShopDetails>
-              <Avatar
-                size="small"
-                rounded
-                source={{ uri: barbershopSelected.logoBarbershop }}
-                onPress={() => console.log('Works!')}
-                activeOpacity={0.7}
-              />
-              <Text>{barbershopSelected.name}</Text>
-              <Text>{`Rua: ${barbershopSelected.address.street}, ${barbershopSelected.address.number}`}</Text>
-              <Text>{barbershopSelected.description}</Text>
-              <Button
-                onPress={() => {
-                  navigation.navigate('BarbershopResume');
-                }}
-              >
-                Ver Detalhes
-              </Button>
+              <BarberShopDetailsLogo>
+                <Avatar
+                  size="large"
+                  rounded
+                  source={{ uri: barbershopSelected.logoBarbershop }}
+                  onPress={() => console.log('Works!')}
+                  activeOpacity={0.7}
+                />
+              </BarberShopDetailsLogo>
+              <BarberShopDetailsInfo>
+                <BarbershopTitle>{barbershopSelected.name}</BarbershopTitle>
+                <BarbershopAddress>{`Rua: ${barbershopSelected.address.street}, ${barbershopSelected.address.number}`}</BarbershopAddress>
+                <DetailsButton
+                  onPress={() => {
+                    navigation.navigate('BarbershopResume');
+                  }}
+                >
+                  Ver Detalhes
+                </DetailsButton>
+              </BarberShopDetailsInfo>
             </BarberShopDetails>
           )}
         </MapContainer>
@@ -240,6 +236,26 @@ MainPage.defaultProps = {
   selectBarbershopScheduling: null,
   updateBarbershop: null,
 };
+
+MainPage.navigationOptions = ({ navigation }) => ({
+  title: 'Home',
+  headerStyle: {
+    backgroundColor: '#3E2622',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Menu');
+      }}
+    >
+      <Icon name="menu" size={40} color="#fff" style={{ marginLeft: 8 }} />
+    </TouchableOpacity>
+  ),
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

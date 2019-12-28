@@ -9,6 +9,8 @@ import UserData from './pages/Registry/components/UserData';
 import BarbershopData from './pages/Registry/components/BarbershopData';
 import BarbershopServices from './pages/Registry/components/BarbershopServices';
 import BarbershopResume from './pages/Scheduling/BarbershopResume';
+import ServicesSelection from './pages/Scheduling/ServicesSelection';
+import Menu from '~/components/Menu';
 
 export default loggedIn =>
   createAppContainer(
@@ -24,7 +26,9 @@ export default loggedIn =>
         }),
         App: createStackNavigator({
           MainPage,
+          Menu,
           BarbershopResume,
+          ServicesSelection,
         }),
       },
       {

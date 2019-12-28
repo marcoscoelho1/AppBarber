@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import MapView from 'react-native-maps';
+import Button from '~/components/Button';
 
 export const Container = styled.View`
   flex: 1;
@@ -12,8 +13,32 @@ export const Header = styled.View`
 
 export const BarberShopDetails = styled.View`
   background: #fff;
-  height: 120px;
+  height: 150px;
   width: 100%;
+  flex-direction: row;
+  padding: 16px;
+`;
+
+export const BarberShopDetailsLogo = styled.View`
+  align-items: center;
+`;
+
+export const BarberShopDetailsInfo = styled.View`
+  padding-left: 8px;
+`;
+
+export const BarbershopTitle = styled.Text`
+  font-size: 21px;
+  font-weight: bold;
+`;
+
+export const BarbershopAddress = styled.Text`
+  font-size: 16px;
+  margin-bottom: 8px;
+`;
+
+export const DetailsButton = styled(Button)`
+  height: 42;
 `;
 
 export const MapContainer = styled.View`
