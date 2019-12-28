@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
+import { Avatar } from 'react-native-elements';
 import { logOut } from '~/store/modules/auth/actions';
 import { updateUser } from '~/store/modules/user/actions';
 import Button from '~/components/Button';
@@ -196,6 +197,13 @@ export class MainPage extends Component {
           </ViewMap>
           {detailsVisible && (
             <BarberShopDetails>
+              <Avatar
+                size="small"
+                rounded
+                source={{ uri: barbershopSelected.logoBarbershop }}
+                onPress={() => console.log('Works!')}
+                activeOpacity={0.7}
+              />
               <Text>{barbershopSelected.name}</Text>
               <Text>{`Rua: ${barbershopSelected.address.street}, ${barbershopSelected.address.number}`}</Text>
               <Text>{barbershopSelected.description}</Text>

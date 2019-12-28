@@ -19,7 +19,6 @@ export function* createBarbershopFirebase({ payload }) {
   console.tron.log('coordenadas', coordinates);
 
   const newBarbershop = {
-    ...barbershop.data.barbershopUserBarber,
     ...data,
     uid: user.data.uid,
     coordinates: { ...coordinates },

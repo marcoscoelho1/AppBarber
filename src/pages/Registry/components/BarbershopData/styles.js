@@ -41,3 +41,7 @@ export const SubmitButton = styled(Button)`
   margin: 15px 0px 30px 0px;
   align-self: stretch;
 `;
+
+export const AvatarContainer = styled.View`
+  margin-bottom: 32px;
+`;

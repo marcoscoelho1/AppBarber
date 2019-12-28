@@ -76,7 +76,10 @@ class BarbershopServices extends Component {
   register = () => {
     const { services } = this.state;
     const { createBarbershopFirebase, barbershop } = this.props;
-    const barberShopComplete = { ...barbershop.data, services: [...services] };
+    const barberShopComplete = {
+      ...barbershop.data.barbershopUserBarber,
+      services: [...services],
+    };
     createBarbershopFirebase({ ...barberShopComplete });
   };
 

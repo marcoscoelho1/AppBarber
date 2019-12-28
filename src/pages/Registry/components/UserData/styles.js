@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
@@ -40,4 +39,8 @@ export const InputForm = styled(Input)`
 export const SubmitButton = styled(Button)`
   margin-top: 15px;
   align-self: stretch;
+`;
+
+export const AvatarContainer = styled.View`
+  margin-bottom: 32px;
 `;

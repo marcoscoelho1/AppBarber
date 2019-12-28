@@ -17,8 +17,8 @@ export default loggedIn =>
         Login: createSwitchNavigator({
           Login,
           EmailAndPassword,
-          UserData,
           UserType,
+          UserData,
           BarbershopData,
           BarbershopServices,
         }),

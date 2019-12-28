@@ -9,5 +9,7 @@ include ':@react-native-firebase_auth'
 project(':@react-native-firebase_auth').projectDir = new File(rootProject.projectDir, './../node_modules/@react-native-firebase/auth/android')
 include ':@react-native-firebase_firestore'
 project(':@react-native-firebase_firestore').projectDir = new File(rootProject.projectDir, './../node_modules/@react-native-firebase/firestore/android')
+include ':@react-native-firebase_storage'
+project(':@react-native-firebase_storage').projectDir = new File(rootProject.projectDir, './../node_modules/@react-native-firebase/storage/android')
 include ':react-native-text-input-mask'
 project(':react-native-text-input-mask').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-text-input-mask/android')
