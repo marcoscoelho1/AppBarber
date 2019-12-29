@@ -3,11 +3,13 @@ import { combineReducers } from 'redux';
 import auth from './auth/reducer';
 import user from './user/reducer';
 import barbershop from './barbershop/reducer';
+import schedule from './schedule/reducer';
 
 const appReducer = combineReducers({
   auth,
   barbershop,
   user,
+  schedule,
 });
 
 const rootReducer = (state, action) => {

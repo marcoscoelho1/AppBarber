@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import PropType from 'prop-types';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { updateSchedule } from '~/store/modules/schedule/actions';
 import Button from '~/components/Button';
 
 import {
@@ -37,11 +39,24 @@ class ServicesSelection extends Component {
   uncheckService = service => {
     const { checkedServices } = this.state;
     const arrayCheckedServices = checkedServices;
-    arrayCheckedServices.splice(service, 1);
+    const indexRemove = arrayCheckedServices.indexOf(service);
+    arrayCheckedServices.splice(indexRemove, 1);
 
     this.setState({
       checkedServices: [...arrayCheckedServices],
     });
+  };
+
+  saveServices = () => {
+    const { updateSchedule, user, barbershop, navigation } = this.props;
+    const { checkedServices } = this.state;
+    updateSchedule({
+      clientId: user.uid,
+      barbershopId: barbershop.uid,
+      services: checkedServices,
+    });
+
+    navigation.navigate('DateSelection');
   };
 
   render() {
@@ -90,7 +105,11 @@ class ServicesSelection extends Component {
             </ServiceContainer>
           ))}
         </ScrollContainer>
-        <Button>
+        <Button
+          onPress={() => {
+            this.saveServices();
+          }}
+        >
           <Text>Continuar</Text>
         </Button>
       </Container>
@@ -99,11 +118,18 @@ class ServicesSelection extends Component {
 }
 
 ServicesSelection.propTypes = {
-  barbershop: PropType.any,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+  user: PropTypes.any,
+  barbershop: PropTypes.any,
+  updateSchedule: PropTypes.func,
 };
 
 ServicesSelection.defaultProps = {
+  user: null,
   barbershop: null,
+  updateSchedule: null,
 };
 
 ServicesSelection.navigationOptions = () => ({
@@ -118,7 +144,11 @@ ServicesSelection.navigationOptions = () => ({
 });
 
 const mapStateToProps = state => ({
+  user: state.user.data,
   barbershop: state.barbershop.data.barbershopSelected,
 });
 
-export default connect(mapStateToProps, null)(ServicesSelection);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ updateSchedule }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServicesSelection);

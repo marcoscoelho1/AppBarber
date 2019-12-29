@@ -145,7 +145,7 @@ export class MainPage extends Component {
   };
 
   render() {
-    const { navigation, logOut } = this.props;
+    const { navigation } = this.props;
     const {
       detailsVisible,
       barbershopSelected,
@@ -222,7 +222,6 @@ MainPage.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  logOut: PropTypes.func,
   updateUser: PropTypes.func,
   updateBarbershop: PropTypes.func,
   selectBarbershopScheduling: PropTypes.func,
@@ -230,7 +229,6 @@ MainPage.propTypes = {
 };
 
 MainPage.defaultProps = {
-  logOut: null,
   auth: null,
   updateUser: null,
   selectBarbershopScheduling: null,

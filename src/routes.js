@@ -10,6 +10,7 @@ import BarbershopData from './pages/Registry/components/BarbershopData';
 import BarbershopServices from './pages/Registry/components/BarbershopServices';
 import BarbershopResume from './pages/Scheduling/BarbershopResume';
 import ServicesSelection from './pages/Scheduling/ServicesSelection';
+import DateSelection from './pages/Scheduling/DateSelection';
 import Menu from '~/components/Menu';
 
 export default loggedIn =>
@@ -29,6 +30,7 @@ export default loggedIn =>
           Menu,
           BarbershopResume,
           ServicesSelection,
+          DateSelection,
         }),
       },
       {
