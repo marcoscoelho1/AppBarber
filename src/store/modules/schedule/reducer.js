@@ -24,6 +24,24 @@ export default function schedule(state = INITIAL_STATE, action) {
       return state;
     }
 
+    case '@schedule/ADD_SCHEDULE_REQUEST': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
+    case '@schedule/ADD_SCHEDULE_SUCCESS': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
     default:
       return state;
   }

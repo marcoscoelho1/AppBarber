@@ -12,3 +12,16 @@ export function updateSchedule(data) {
     payload: { data },
   };
 }
+
+export function addScheduleFirebase() {
+  return {
+    type: '@schedule/ADD_SCHEDULE_REQUEST',
+  };
+}
+
+export function addScheduleFirebaseScuccess(data) {
+  return {
+    type: '@schedule/ADD_SCHEDULE_SUCCESS',
+    payload: { data },
+  };
+}
