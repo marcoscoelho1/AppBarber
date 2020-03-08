@@ -25,6 +25,8 @@ export const BarberShopDetailsLogo = styled.View`
 
 export const BarberShopDetailsInfo = styled.View`
   padding-left: 8px;
+  padding-right: 8px;
+  flex-grow: 1;
 `;
 
 export const BarbershopTitle = styled.Text`

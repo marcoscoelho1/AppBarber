@@ -11,6 +11,7 @@ import BarbershopServices from './pages/Registry/components/BarbershopServices';
 import BarbershopResume from './pages/Scheduling/BarbershopResume';
 import ServicesSelection from './pages/Scheduling/ServicesSelection';
 import ResumeScheduling from './pages/Scheduling/ResumeScheduling';
+import SchedulingHistory from './pages/SchedulingHistory';
 import DateSelection from './pages/Scheduling/DateSelection';
 import Menu from '~/components/Menu';
 
@@ -33,6 +34,7 @@ export default loggedIn =>
           ServicesSelection,
           DateSelection,
           ResumeScheduling,
+          SchedulingHistory,
         }),
       },
       {

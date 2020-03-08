@@ -9,13 +9,15 @@ import { logOut } from '~/store/modules/auth/actions';
 import Background from '~/components/BarberBackground';
 import { Container, ContainerAvatar, List, ItemList, ItemText } from './styles';
 
-function Menu({ user, logOut }) {
+function Menu({ user, logOut, navigation }) {
   const menuList = [
     {
       index: 1,
       title: 'Histórico Agendamento',
       icon: 'today',
-      action: () => {},
+      action: () => {
+        navigation.navigate('SchedulingHistory');
+      },
     },
     {
       index: 2,
@@ -106,6 +108,9 @@ Menu.navigationOptions = ({ navigation }) => ({
 Menu.propTypes = {
   user: PropTypes.any,
   logOut: PropTypes.func,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 Menu.defaultProps = {

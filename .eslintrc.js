@@ -35,6 +35,7 @@ module.exports = {
     'import/no-named-as-default' : 'off',
     'import/prefer-default-export' : 'off',
     'no-param-reassign' : 'off',
+    'no-plusplus' : 'off',
     'no-shadow' : 'off',
     'react/no-typos' : 'off',
     'react/jsx-props-no-spreading' : 'off',

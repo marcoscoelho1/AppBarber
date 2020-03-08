@@ -5,6 +5,7 @@ import { CheckBox } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import uuid4 from 'uuid/v4';
 import { updateSchedule } from '~/store/modules/schedule/actions';
 import Button from '~/components/Button';
 
@@ -51,8 +52,12 @@ class ServicesSelection extends Component {
     const { updateSchedule, user, barbershop, navigation } = this.props;
     const { checkedServices } = this.state;
     updateSchedule({
+      id: uuid4(),
       clientId: user.uid,
+      clientName: user.name,
       barbershopId: barbershop.uid,
+      barbershopName: barbershop.name,
+      barbershopAddress: barbershop.address,
       services: checkedServices,
     });
 
