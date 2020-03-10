@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
@@ -11,7 +11,10 @@ import { logOut } from '~/store/modules/auth/actions';
 import Background from '~/components/BarberBackground';
 import { Container, List, ItemList, ItemText } from './styles';
 
-const schedullingFirebase = firestore().collection('schedules');
+const schedullingFirebase = firestore()
+  .collection('schedules')
+  .orderBy('date', 'desc')
+  .orderBy('time', 'desc');
 
 export class SchedulingHistory extends Component {
   constructor(props) {
@@ -26,33 +29,41 @@ export class SchedulingHistory extends Component {
   }
 
   getLastScheduling = () => {
+    const { navigation, user } = this.props;
+
     schedullingFirebase
-      .where('clientId', '==', 'ghRqHtRvHofe1Iyh2ctoXXbDZzH2')
-      .limit(20)
+      .where('clientId', '==', user.data.uid)
+      .limit(10)
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          const { lastSchedules } = this.state;
-          let count = 0;
-          this.setState({
-            // lastSchedules: [...lastSchedules, doc.data()],
-            lastSchedules: [
-              ...lastSchedules,
-              {
-                index: count++,
-                title: `${
-                  doc.data().barbershopName
-                } \n ${format(
-                  doc.data().date.toDate(),
-                  "dd 'de' MMMM 'de' yyyy",
-                  { locale: pt }
-                )} \n às ${doc.data().time}`,
-                icon: 'today',
-                action: () => {},
-                data: doc.data(),
-              },
-            ],
+        if (querySnapshot) {
+          querySnapshot.forEach(doc => {
+            const { lastSchedules } = this.state;
+            let count = 0;
+            this.setState({
+              // lastSchedules: [...lastSchedules, doc.data()],
+              lastSchedules: [
+                ...lastSchedules,
+                {
+                  index: count++,
+                  title: `${
+                    doc.data().barbershopName
+                  } \n ${format(
+                    doc.data().date.toDate(),
+                    "dd 'de' MMMM 'de' yyyy",
+                    { locale: pt }
+                  )} \n às ${doc.data().time}`,
+                  icon: 'today',
+                  action: () => {
+                    navigation.navigate('SchedulingDetails', {
+                      details: doc.data(),
+                    });
+                  },
+                  data: doc.data(),
+                },
+              ],
+            });
           });
-        });
+        }
       });
   };
 
@@ -75,7 +86,7 @@ export class SchedulingHistory extends Component {
                 {item.icon !== '' && (
                   <Icon
                     name={item.icon}
-                    size={40}
+                    size={30}
                     color="#fff"
                     style={{ marginRight: 8 }}
                   />
@@ -115,9 +126,16 @@ SchedulingHistory.navigationOptions = ({ navigation }) => ({
   ),
 });
 
-SchedulingHistory.propTypes = {};
+SchedulingHistory.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+  user: PropTypes.any,
+};
 
-SchedulingHistory.defaultProps = {};
+SchedulingHistory.defaultProps = {
+  user: null,
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({ logOut }, dispatch);
 

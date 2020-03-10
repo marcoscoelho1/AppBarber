@@ -27,7 +27,7 @@ class Login extends Component {
   }
 
   render() {
-    const { navigation, loginFirebase, auth, logOut } = this.props;
+    const { navigation, loginFirebase, auth } = this.props;
     const { email, password } = this.state;
 
     return (
@@ -55,14 +55,6 @@ class Login extends Component {
               onChangeText={value => this.setState({ password: value })}
             />
             <SubmitButton
-              onPress={() => {
-                logOut();
-                // navigation.navigate('Login');
-              }}
-            >
-              Sair
-            </SubmitButton>
-            <SubmitButton
               onPress={() => loginFirebase(email, password)}
               loading={auth.loading}
             >
@@ -83,7 +75,7 @@ Login.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
   auth: PropTypes.any.isRequired,
-  logOut: PropTypes.any.isRequired,
+  // logOut: PropTypes.any.isRequired,
   loginFirebase: PropTypes.func.isRequired,
 };
 

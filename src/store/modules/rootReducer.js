@@ -4,12 +4,14 @@ import auth from './auth/reducer';
 import user from './user/reducer';
 import barbershop from './barbershop/reducer';
 import schedule from './schedule/reducer';
+import feedback from './feedback/reducer';
 
 const appReducer = combineReducers({
   auth,
   barbershop,
   user,
   schedule,
+  feedback,
 });
 
 const rootReducer = (state, action) => {

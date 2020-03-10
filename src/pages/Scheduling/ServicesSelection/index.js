@@ -76,15 +76,15 @@ class ServicesSelection extends Component {
             <ServiceContainer key={index}>
               <InfoContainer>
                 <ServiceLine>
-                  <Icon name="store" size={40} color="#ea8d00" />
+                  <Icon name="store" size={30} color="#ea8d00" />
                   <ServiceText>{service.description}</ServiceText>
                 </ServiceLine>
                 <ServiceLine>
-                  <Icon name="alarm" size={40} color="#ea8d00" />
+                  <Icon name="alarm" size={30} color="#ea8d00" />
                   <ServiceText>{`${service.time} minutos`}</ServiceText>
                 </ServiceLine>
                 <ServiceLine>
-                  <Icon name="monetization-on" size={40} color="#ea8d00" />
+                  <Icon name="monetization-on" size={30} color="#ea8d00" />
                   <ServiceText>{service.amount}</ServiceText>
                 </ServiceLine>
               </InfoContainer>
@@ -105,7 +105,7 @@ class ServicesSelection extends Component {
                   borderBottomColor: '#fff',
                 }}
                 checkedColor="#ea8d00"
-                size={40}
+                size={30}
               />
             </ServiceContainer>
           ))}

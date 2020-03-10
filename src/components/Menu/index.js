@@ -66,7 +66,7 @@ function Menu({ user, logOut, navigation }) {
               {item.icon !== '' && (
                 <Icon
                   name={item.icon}
-                  size={40}
+                  size={30}
                   color="#fff"
                   style={{ marginRight: 8 }}
                 />
@@ -97,7 +97,7 @@ Menu.navigationOptions = ({ navigation }) => ({
     >
       <Icon
         name="chevron-left"
-        size={40}
+        size={30}
         color="#fff"
         style={{ marginLeft: 8 }}
       />

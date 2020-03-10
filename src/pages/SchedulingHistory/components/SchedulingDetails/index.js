@@ -1,16 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Text } from 'react-native';
-import { bindActionCreators } from 'redux';
+
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import {
-  updateSchedule,
-  addScheduleFirebase,
-} from '~/store/modules/schedule/actions';
-import Button from '~/components/Button';
 
 import {
   Container,
@@ -29,32 +22,34 @@ import {
   BarbershopAddressContainer,
 } from './styles';
 
-function ServicesSelection({ schedule, addScheduleFirebase, navigation }) {
+function SchedulingDetails({ navigation }) {
+  const { details } = navigation.state.params;
+
   return (
     <Container>
       <ScrollContainer>
-        <BarbershopName>{schedule.data.barbershopName}</BarbershopName>
+        <BarbershopName>{details.barbershopName}</BarbershopName>
         <BarbershopAddressContainer>
           <Icon name="location-on" size={30} color="#ea8d00" />
           <BarbershopAddress>
-            {`${schedule.data.barbershopAddress.street}, ${schedule.data.barbershopAddress.number}\n${schedule.data.barbershopAddress.neighborhood}, ${schedule.data.barbershopAddress.city} - ${schedule.data.barbershopAddress.regionCode}`}
+            {`${details.barbershopAddress.street}, ${details.barbershopAddress.number}\n${details.barbershopAddress.neighborhood}, ${details.barbershopAddress.city} - ${details.barbershopAddress.regionCode}`}
           </BarbershopAddress>
         </BarbershopAddressContainer>
         <Title>Data e Horário:</Title>
         <DateContainer>
           <Icon name="event" size={30} color="#ea8d00" />
           <DateText>
-            {format(schedule.data.date, "dd 'de' MMMM 'de' yyyy", {
+            {format(details.date.toDate(), "dd 'de' MMMM 'de' yyyy", {
               locale: pt,
             })}
           </DateText>
         </DateContainer>
         <HourContainer>
           <Icon name="alarm" size={30} color="#ea8d00" />
-          <HourText>{schedule.data.time}</HourText>
+          <HourText>{details.time}</HourText>
         </HourContainer>
         <Title>Servicos:</Title>
-        {schedule.data.services.map((service, index) => (
+        {details.services.map((service, index) => (
           <ServiceContainer key={index}>
             <InfoContainer>
               <ServiceLine>
@@ -73,33 +68,21 @@ function ServicesSelection({ schedule, addScheduleFirebase, navigation }) {
           </ServiceContainer>
         ))}
       </ScrollContainer>
-      <Button
-        onPress={() => {
-          addScheduleFirebase();
-          navigation.navigate('MainPage');
-        }}
-      >
-        <Text>Confirmar</Text>
-      </Button>
     </Container>
   );
 }
 
-ServicesSelection.propTypes = {
+SchedulingDetails.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    state: PropTypes.any,
   }).isRequired,
-  schedule: PropTypes.any,
-  addScheduleFirebase: PropTypes.func,
 };
 
-ServicesSelection.defaultProps = {
-  schedule: null,
-  addScheduleFirebase: null,
-};
+SchedulingDetails.defaultProps = {};
 
-ServicesSelection.navigationOptions = () => ({
-  title: 'Resumo',
+SchedulingDetails.navigationOptions = () => ({
+  title: 'Detalhe do Agendamento',
   headerStyle: {
     backgroundColor: '#3E2622',
   },
@@ -109,11 +92,4 @@ ServicesSelection.navigationOptions = () => ({
   },
 });
 
-const mapStateToProps = state => ({
-  schedule: state.schedule,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateSchedule, addScheduleFirebase }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ServicesSelection);
+export default SchedulingDetails;
