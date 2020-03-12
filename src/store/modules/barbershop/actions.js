@@ -32,3 +32,10 @@ export function selectBarbershopScheduling(data) {
     payload: { data },
   };
 }
+
+export function updateBarbershopFirebase(data) {
+  return {
+    type: '@barbershop/UPDATE_BARBERSHOP_FIREBASE',
+    payload: { data },
+  };
+}

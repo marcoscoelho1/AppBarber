@@ -37,6 +37,7 @@ module.exports = {
     'no-param-reassign' : 'off',
     'no-plusplus' : 'off',
     'no-shadow' : 'off',
+    'no-nested-ternary' : 'off',
     'react/no-typos' : 'off',
     'react/jsx-props-no-spreading' : 'off',
     'react/forbid-prop-types' : 'off',

@@ -26,3 +26,10 @@ export function createUserFirebase(data) {
     payload: { data },
   };
 }
+
+export function updateUserFirebase(data) {
+  return {
+    type: '@user/UPDATEUSER_FIREBASE_REQUEST',
+    payload: { data },
+  };
+}

@@ -11,10 +11,7 @@ import { logOut } from '~/store/modules/auth/actions';
 import Background from '~/components/BarberBackground';
 import { Container, List, ItemList, ItemText } from './styles';
 
-const schedullingFirebase = firestore()
-  .collection('schedules')
-  .orderBy('date', 'desc')
-  .orderBy('time', 'desc');
+const schedullingFirebase = firestore().collection('schedules');
 
 export class SchedulingHistory extends Component {
   constructor(props) {
@@ -30,8 +27,16 @@ export class SchedulingHistory extends Component {
 
   getLastScheduling = () => {
     const { navigation, user } = this.props;
+    schedullingFirebase
+      .where('clientId', '==', user.data.uid)
+      .limit(10)
+      .onSnapshot(querySnapshot => {
+        console.tron.log(querySnapshot);
+      });
 
     schedullingFirebase
+      .orderBy('date', 'desc')
+      .orderBy('time', 'desc')
       .where('clientId', '==', user.data.uid)
       .limit(10)
       .onSnapshot(querySnapshot => {

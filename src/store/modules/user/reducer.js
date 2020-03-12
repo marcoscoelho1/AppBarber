@@ -45,6 +45,30 @@ export default function user(state = INITIAL_STATE, action) {
       return state;
     }
 
+    case '@user/UPDATEUSER_FIREBASE_REQUEST': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
+    case '@user/UPDATEUSER_FIREBASE_SUCCESS': {
+      const { data } = action.payload;
+
+      state = {
+        ...state,
+        data: {
+          ...state.data,
+          ...data,
+        },
+        loading: false,
+      };
+
+      return state;
+    }
+
     default:
       return state;
   }

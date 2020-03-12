@@ -79,6 +79,15 @@ export default function barbershop(state = INITIAL_STATE, action) {
       return state;
     }
 
+    case '@barbershop/UPDATE_BARBERSHOP_FIREBASE': {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      return state;
+    }
+
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage';
 import EmailAndPassword from './pages/Registry/components/EmailAndPassword';
 import UserType from './pages/Registry/components/UserType';
 import UserData from './pages/Registry/components/UserData';
+import UserDataUpdate from './pages/Registry/components/UserDataUpdate';
 import BarbershopData from './pages/Registry/components/BarbershopData';
 import BarbershopServices from './pages/Registry/components/BarbershopServices';
 import BarbershopResume from './pages/Scheduling/BarbershopResume';
@@ -37,6 +38,7 @@ export default loggedIn =>
           ResumeScheduling,
           SchedulingHistory,
           SchedulingDetails,
+          UserDataUpdate,
         }),
       },
       {

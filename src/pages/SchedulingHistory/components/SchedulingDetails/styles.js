@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Input from '~/components/Input';
 
 export const Container = styled.View`
   flex: 1;
@@ -7,6 +8,20 @@ export const Container = styled.View`
 
 export const ScrollContainer = styled.ScrollView`
   flex: 1;
+`;
+
+export const ConfirmButton = styled.TouchableOpacity`
+  height: 66px;
+  background: #ea8d00;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const ConfirmText = styled.Text`
+  color: #fff;
+  font-weight: 500;
+  font-size: 28px;
 `;
 
 export const BarbershopAddressContainer = styled.View`
@@ -69,4 +84,24 @@ export const HourText = styled.Text`
 export const DateText = styled.Text`
   font-size: 16px;
   margin-left: 8px;
+`;
+
+export const AvaliationContainer = styled.View`
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+`;
+
+export const StarsContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 16px;
+`;
+
+export const InputForm = styled(Input)`
+  margin-bottom: 16px;
 `;

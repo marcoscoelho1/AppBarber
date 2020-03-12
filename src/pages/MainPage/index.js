@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import { Avatar } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Stars from 'react-native-stars';
 import { logOut } from '~/store/modules/auth/actions';
 import { updateUser } from '~/store/modules/user/actions';
 
@@ -20,6 +21,7 @@ import {
   DetailsButton,
   BarbershopTitle,
   BarbershopAddress,
+  BarberShopStarsContainer,
   mapStyle,
 } from './styles';
 import {
@@ -29,6 +31,20 @@ import {
 
 const barbershopFirebase = firestore().collection('barbershops');
 const userFirebase = firestore().collection('users');
+
+const stylesStar = StyleSheet.create({
+  myStarStyle: {
+    color: '#ea8d00',
+    backgroundColor: 'transparent',
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    fontSize: 16,
+  },
+  myEmptyStarStyle: {
+    color: 'white',
+  },
+});
 
 export class MainPage extends Component {
   constructor(props) {
@@ -84,7 +100,7 @@ export class MainPage extends Component {
 
         this.setState(
           {
-            user: { ...doc.data() },
+            user: { ...doc.data(), documentId: doc.id },
           },
           () => {
             const { user } = this.state;
@@ -201,6 +217,29 @@ export class MainPage extends Component {
               </BarberShopDetailsLogo>
               <BarberShopDetailsInfo>
                 <BarbershopTitle>{barbershopSelected.name}</BarbershopTitle>
+                <BarberShopStarsContainer>
+                  <Stars
+                    default={barbershopSelected.starsMedia}
+                    count={5}
+                    starSize={150}
+                    fullStar={
+                      <Icon name="star" style={[stylesStar.myStarStyle]} />
+                    }
+                    emptyStar={
+                      <Icon
+                        name="star"
+                        style={[
+                          stylesStar.myStarStyle,
+                          stylesStar.myEmptyStarStyle,
+                        ]}
+                      />
+                    }
+                    halfStar={
+                      <Icon name="star-half" style={[stylesStar.myStarStyle]} />
+                    }
+                    disabled
+                  />
+                </BarberShopStarsContainer>
                 <BarbershopAddress>{`Rua: ${barbershopSelected.address.street}, ${barbershopSelected.address.number}`}</BarbershopAddress>
                 <DetailsButton
                   onPress={() => {

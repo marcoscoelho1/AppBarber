@@ -23,7 +23,9 @@ function Menu({ user, logOut, navigation }) {
       index: 2,
       title: 'Editar Perfil',
       icon: 'person',
-      action: () => {},
+      action: () => {
+        navigation.navigate('UserDataUpdate');
+      },
     },
     {
       index: 3,
@@ -59,7 +61,6 @@ function Menu({ user, logOut, navigation }) {
             <ItemList
               key={item.index}
               onPress={() => {
-                console.tron.log('Apertou');
                 item.action();
               }}
             >

@@ -57,6 +57,11 @@ export const ViewMap = styled(MapView)`
   bottom: 0;
 `;
 
+export const BarberShopStarsContainer = styled.View`
+  width: 100%;
+  align-items: flex-start;
+`;
+
 export const mapStyle = [
   {
     elementType: 'geometry',

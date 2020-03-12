@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 // import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Stars from 'react-native-stars';
+import { StyleSheet } from 'react-native';
 
 import {
   Container,
@@ -16,7 +18,23 @@ import {
   // SessionSubTitle,
   SessionText,
   FloatingButton,
+  BarberShopStarsContainer,
+  CommentContainer,
 } from './styles';
+
+const stylesStar = StyleSheet.create({
+  myStarStyle: {
+    color: '#ea8d00',
+    backgroundColor: 'transparent',
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    fontSize: 21,
+  },
+  myEmptyStarStyle: {
+    color: 'white',
+  },
+});
 
 function BarbershopResume({ barbershop, navigation }) {
   return (
@@ -24,6 +42,24 @@ function BarbershopResume({ barbershop, navigation }) {
       <HeaderImageBackground source={{ uri: barbershop.logoBarbershop }}>
         <Header>
           <BarbershopName>{barbershop.name}</BarbershopName>
+          <BarberShopStarsContainer>
+            <Stars
+              default={barbershop.starsMedia}
+              count={5}
+              starSize={150}
+              fullStar={<Icon name="star" style={[stylesStar.myStarStyle]} />}
+              emptyStar={
+                <Icon
+                  name="star"
+                  style={[stylesStar.myStarStyle, stylesStar.myEmptyStarStyle]}
+                />
+              }
+              halfStar={
+                <Icon name="star-half" style={[stylesStar.myStarStyle]} />
+              }
+              disabled
+            />
+          </BarberShopStarsContainer>
           <BarbershopAddress>
             {`${barbershop.address.street}, ${barbershop.address.number} - ${barbershop.address.neighborhood}, ${barbershop.address.city} - ${barbershop.address.regionCode}`}
           </BarbershopAddress>
@@ -40,7 +76,39 @@ function BarbershopResume({ barbershop, navigation }) {
         </SessionContainer>
         <SessionContainer>
           <SessionTitle>Avaliações e comentários</SessionTitle>
-          <SessionText>Ainda não há comentários</SessionText>
+          {barbershop.comments.length > 0 ? (
+            barbershop.comments.map(comment => (
+              <CommentContainer>
+                <SessionTitle>{comment.author}</SessionTitle>
+                <BarberShopStarsContainer>
+                  <Stars
+                    default={comment.stars}
+                    count={5}
+                    starSize={150}
+                    fullStar={
+                      <Icon name="star" style={[stylesStar.myStarStyle]} />
+                    }
+                    emptyStar={
+                      <Icon
+                        name="star"
+                        style={[
+                          stylesStar.myStarStyle,
+                          stylesStar.myEmptyStarStyle,
+                        ]}
+                      />
+                    }
+                    halfStar={
+                      <Icon name="star-half" style={[stylesStar.myStarStyle]} />
+                    }
+                    disabled
+                  />
+                </BarberShopStarsContainer>
+                <SessionText>{comment.comment}</SessionText>
+              </CommentContainer>
+            ))
+          ) : (
+            <SessionText>Ainda não há comentários</SessionText>
+          )}
         </SessionContainer>
       </SessionMainContainer>
       <FloatingButton onPress={() => navigation.navigate('ServicesSelection')}>

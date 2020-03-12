@@ -26,6 +26,11 @@ export const BarbershopName = styled.Text`
   font-size: 21;
 `;
 
+export const BarberShopStarsContainer = styled.View`
+  width: 100%;
+  align-items: flex-start;
+`;
+
 export const BarbershopAddress = styled.Text`
   color: #fff;
   font-size: 12;
@@ -34,6 +39,10 @@ export const BarbershopAddress = styled.Text`
 export const SessionContainer = styled.View`
   padding: 0px 16px;
   margin-bottom: 32px;
+`;
+
+export const CommentContainer = styled.View`
+  padding: 16px 0px;
 `;
 
 export const SessionTitle = styled.Text`
