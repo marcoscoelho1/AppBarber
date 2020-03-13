@@ -9,6 +9,9 @@ import './config/ReactotronConfig';
 
 import { store, persistor } from './store';
 
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+console.disableYellowBox = true;
+
 export default function Index() {
   return (
     <Provider store={store}>
