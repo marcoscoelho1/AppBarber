@@ -14,8 +14,6 @@ import { createUserFirebase } from '~/store/modules/user/actions';
 import {
   AvatarContainer,
   Container,
-  ImageHeader,
-  LogoHeader,
   InputForm,
   SubmitButton,
   Form,
@@ -143,9 +141,6 @@ class UserData extends Component {
     return (
       <Background>
         <Container>
-          <LogoHeader>
-            <ImageHeader source={BeardIcon} />
-          </LogoHeader>
           <Form>
             <Title>Informe seus dados pessoais!</Title>
             <AvatarContainer>

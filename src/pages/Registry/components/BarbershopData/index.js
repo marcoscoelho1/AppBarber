@@ -13,8 +13,6 @@ import { updateBarbershop } from '~/store/modules/barbershop/actions';
 
 import {
   Container,
-  ImageHeader,
-  LogoHeader,
   InputForm,
   SubmitButton,
   AvatarContainer,
@@ -152,9 +150,6 @@ class BarbershopData extends Component {
     return (
       <Background>
         <Container>
-          <LogoHeader>
-            <ImageHeader source={BeardIcon} />
-          </LogoHeader>
           <Form>
             <Title>Agora, preencha os dados e o endereço da barbearia!</Title>
             <AvatarContainer>

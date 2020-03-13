@@ -31,6 +31,7 @@ export const Form = styled.View`
   align-items: center;
   align-self: stretch;
   background: transparent;
+  padding: 32px 0px;
 `;
 
 export const InputForm = styled(Input)`

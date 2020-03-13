@@ -39,7 +39,7 @@ export function* createBarbershopFirebase({ payload }) {
       yield put(
         showFeedback({
           message: 'Cadastrado com sucesso!',
-          type: 'error',
+          type: 'success',
           visible: true,
         })
       );

@@ -26,6 +26,11 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    const { logOut } = this.props;
+    logOut();
+  }
+
   render() {
     const { navigation, loginFirebase, auth } = this.props;
     const { email, password } = this.state;
@@ -75,7 +80,7 @@ Login.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
   auth: PropTypes.any.isRequired,
-  // logOut: PropTypes.any.isRequired,
+  logOut: PropTypes.any.isRequired,
   loginFirebase: PropTypes.func.isRequired,
 };
 
